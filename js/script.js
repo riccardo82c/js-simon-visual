@@ -91,7 +91,9 @@ function visualizza() {
 function inserimento() {
 
 	// utilizzo un while invece che un for che mi permette di verificare che l'utente nn inserisca più volte lo stesso numero... il contatore è numeriUtente.length < 5 così da incrementarsi ogniqualvolta l'utente mette un numero non ancora messo (a prescinde dal fatto che sia o meno presente in quelli definiti random dal pc)
-	while (numeriUtente.length < numeroTentativi) {
+	var numeroTentativiFix = numeroTentativi;
+
+	while (numeriUtente.length < numeroTentativiFix) {
 		var numeroUtente = parseInt(prompt('Inserisci un numero che hai visto e premi ok'));
 
 		// 4.1 controllo che il num non sia già stato inserito
