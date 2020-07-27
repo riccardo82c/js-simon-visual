@@ -97,10 +97,13 @@ function inserimento() {
 		var numeroUtente = parseInt(prompt('Inserisci un numero che hai visto e premi ok'));
 
 		// 4.1 controllo che il num non sia già stato inserito
-		if (!checkArr(numeriUtente, numeroUtente)) {
+
+
+		if (!numeriUtente.includes(numeroUtente)) {
 			numeriUtente.push(numeroUtente);
 			// 4. Controllo se il num è stato indovinato...
-			if (checkArr(numeriPc, numeroUtente)) {
+
+			if (numeriPc.includes(numeroUtente)) {
 				numeriGiusti.push(numeroUtente);
 				var str = `[value="${numeroUtente}"]`;
 				$(str).removeClass('prova');
@@ -125,18 +128,7 @@ function inserimento() {
 };
 
 
-/* FUNZIONI */
 // funzione random
 function numRandom(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// funzione check se un N è presente in un array (true = presente)
-function checkArr(arr, num) {
-	for (let i = 0; i < arr.length; i++) {
-		if (num == arr[i]) {
-			return true;
-		}
-	}
-	return false;
 }
