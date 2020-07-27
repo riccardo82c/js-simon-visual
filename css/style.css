@@ -10,6 +10,32 @@
 	display: table;
 }
 
+/*  */
+
+body {
+	background-color: #333;
+	color: white;
+	font-family: 'Rowdies',
+		cursive;
+}
+
+
+h1,
+h2 {
+	text-align: center;
+}
+
+h1 {
+	font-size: 45px;
+	margin: 20px 0;
+}
+
+h2 {
+	font-size: 35px;
+	margin: 20px 0;
+}
+
+/*  */
 .container {
 	padding: 40px;
 	height: 100vh;
@@ -20,23 +46,28 @@
 	/* place-content: center; */
 }
 
+.contained-win {
+	background-color: #333;
+	color: white;
+	font-size: 80px;
+	padding: 50px;
+}
+
 
 .contained {
 	width: 800px;
 }
 
-h1,
-h2 {
-	font-size: 40px;
-	text-align: center;
+.title-none {
+	display: none;
 }
 
 .numbers {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	width: 100%;
 	height: 200px;
-
 }
 
 .card {
@@ -52,20 +83,13 @@ h2 {
 
 
 /* flip card */
-
-
-
-
 .flip-card {
 	height: 100%;
 	width: calc(100% / 5 - 10px);
 	text-align: center;
 	line-height: 200px;
-	font-size: 50px;
+
 }
-
-
-
 
 .flip-card-inner {
 	position: relative;
@@ -89,17 +113,23 @@ h2 {
 	height: 100%;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
+	border-radius: 10px;
+
 }
 
 .flip-card-front {
-	background-color: rgb(42, 153, 161);
+	background-color: white;
 	color: black;
+	border: 3px solid black;
+	font-size: 60px;
 }
 
 .flip-card-back {
-	background-color: #2980b9;
+	background-color: #777;
 	color: white;
 	transform: rotateY(180deg);
+	border: 3px solid white;
+	font-size: 80px;
 }
 
 /*  */

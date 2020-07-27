@@ -10,68 +10,117 @@ quali dei numeri da indovinare sono stati individuati. */
 
 
 // 1. Array di numeri creati dal pc
-var numeriPc = [];
-var numeriGiusti = [];
-var numeriUtente = [];
+var numeriPc = [],
+	numeriGiusti = [],
+	numeriUtente = [],
+	numeroTentativi = $('.flip-card').length;
 
-/* Finchè la lunghezza dell'array non arriva a 5 */
-/* inserisco un numero nell'array dopo aver controllato che nn è presente 
-nell'array */
-while (numeriPc.length < 5) {
+
+
+/* Finchè la lunghezza dell'array non arriva a numeroTentativi*/
+/* inserisco un numero nell'array dopo aver controllato che nn sia già presente */
+while (numeriPc.length < numeroTentativi) {
 	var numeroRnd = numRandom(1, 100);
-	if (!checkArr(numeriPc, numeroRnd)) {
+	if (!numeriPc.includes(numeroRnd)) {
 		numeriPc.push(numeroRnd);
 	}
 }
 
-/*  */
 
+// Inserisco in ogni cards un numero dell'array random
 $('.flip-card-front').each(function (i) {
 	$(this).text(numeriPc[i]);
 })
-
 $('.flip-card').each(function (i) {
 	$(this).attr('value', numeriPc[i]);
 })
 
-setTimeout(function () {
-	$('.flip-card').addClass('prova');
-	$('h2').text('Ora tieni a mente i numeri per 30 secondi');
-	$('h1').text('Memory Start');
-}, 10000);
 
 
-/*  */
+// Setto il conto alla rovescia per guardare i numeri 10 sec
+let clock1 = setInterval(countdown1, 1000);
+var indice1 = 10;
 
-// 2. Visualizzo nell'alert l'array di num creati dal pc
-// alert(numeriPc + 'Memorizza questi numeri, hai 30 secondi di tempo');
+function countdown1() {
+	$('#time-left1').text(indice1--);
+	if (indice1 < 0) {
+		clearInterval(clock1);
+		// Visualizzazione dei numeri
+		visualizza();
+	}
+}
+
+// Log dei numeri vincenti
 console.log(numeriPc);
 
 
-// 3. metodo setTimeout per temporizzare la comparsa del ciclo di 5 prompt
+// Metodo setTimeout per temporizzare la comparsa del ciclo al termine dei 10 sec
+// Ho 30 sec di tempo per NON dimenticare i numeri visti
+
 setTimeout(function () {
+	let clock2 = setInterval(countdown2, 1000);
+	var indice2 = 20;
+
+	function countdown2() {
+
+		$('#time-left2').text(indice2--);
+		if (indice2 < 0) {
+			clearInterval(clock2);
+			inserimento();
+		}
+	}
+}, indice1 * 1000) /* questo temporizzatore serve per partire 10 sec dopo il primo intervallo */
+
+
+
+
+
+
+/* Funzioni */
+
+
+function visualizza() {
+	$('.flip-card').addClass('prova');
+
+	$('#second-h2').removeClass('title-none');
+	$('#first-h2').addClass('title-none');
+};
+
+
+// 3. metodo setTimeout per temporizzare la comparsa del ciclo di 5 prompt
+function inserimento() {
 
 	// utilizzo un while invece che un for che mi permette di verificare che l'utente nn inserisca più volte lo stesso numero... il contatore è numeriUtente.length < 5 così da incrementarsi ogniqualvolta l'utente mette un numero non ancora messo (a prescinde dal fatto che sia o meno presente in quelli definiti random dal pc)
-	while (numeriUtente.length < 5) {
+	while (numeriUtente.length < numeroTentativi) {
 		var numeroUtente = parseInt(prompt('Inserisci un numero che hai visto e premi ok'));
+
 		// 4.1 controllo che il num non sia già stato inserito
 		if (!checkArr(numeriUtente, numeroUtente)) {
 			numeriUtente.push(numeroUtente);
 			// 4. Controllo se il num è stato indovinato...
 			if (checkArr(numeriPc, numeroUtente)) {
 				numeriGiusti.push(numeroUtente);
-				console.log('trovato');
 				var str = `[value="${numeroUtente}"]`;
-				console.log(str);
 				$(str).removeClass('prova');
 			}
+			numeroTentativi--;
+			$('h1').text(`Memory Start - hai ${numeroTentativi} tentativi`);
 		} else {
 			alert(`Guarda che questo numero l'hai già inserito`);
 		}
 	}
+
+	// condizione vittoria
+	if (numeriGiusti.length == numeriPc.length) {
+		$('.contained').addClass('title-none');
+		$('.contained-win').removeClass('title-none');
+	} else {
+		$('h1').text(`Hai indovinato ${numeriGiusti.length} numeri`);
+		$('#second-h2').addClass('title-none');
+	}
 	// Log a video dei numeri indovinati e di quanti sono
 	console.log('Hai indovinato ' + numeriGiusti.length + ' numeri. Eccoli ' + numeriGiusti);
-}, 30000);
+};
 
 
 /* FUNZIONI */
